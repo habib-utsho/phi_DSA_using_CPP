@@ -14,7 +14,7 @@ int main()
     int leftInd = 0;
     int rightInd = n - 1;
     bool isFound = false;
-    while (leftInd < rightInd)
+    while (leftInd <= rightInd)
     {
         int mid = (leftInd + rightInd) / 2;
         if (find == v[mid])
@@ -26,7 +26,8 @@ int main()
         {
             rightInd = mid - 1;
         }
-        else if (v[mid] < find)
+        // else if (v[mid] < find)
+        else
         {
             leftInd = mid + 1;
         }
