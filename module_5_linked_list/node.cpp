@@ -20,5 +20,12 @@ int main()
     b.next = &c;
     c.next = NULL;
 
+    cout << a.val << endl;
+    cout << (*a.next).val << endl;
+    cout << a.next->val << endl;       // same as prev line
+    cout << a.next->next->val << endl; // output c val
+    cout << "b address is: " << a.next << endl;
+    cout << "c address is: " << a.next->next << endl;
+
     return 0;
 }
