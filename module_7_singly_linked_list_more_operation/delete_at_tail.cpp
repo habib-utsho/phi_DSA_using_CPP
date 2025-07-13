@@ -37,7 +37,7 @@ void insertElemAtTailLinkedList(Node *&head, Node *&tail, int val)
     tail->next = newNode;
     tail = newNode;
 }
-void delete_at_any_pos(Node *head, int ind)
+void delete_at_tail(Node *head, Node *&tail, int ind)
 {
 
     Node *temp = head;
@@ -48,6 +48,7 @@ void delete_at_any_pos(Node *head, int ind)
     Node *deleteNode = temp->next;
     temp->next = temp->next->next;
     delete deleteNode;
+    tail = temp;
 }
 
 int main()
@@ -62,11 +63,12 @@ int main()
         if (val == -1)
         {
             break;
-        } 
+        }
         insertElemAtTailLinkedList(head, tail, val);
     }
 
-    delete_at_any_pos(head, 4);
+    delete_at_tail(head, tail, 5);
+
     printLinkedList(head);
 
     return 0;
