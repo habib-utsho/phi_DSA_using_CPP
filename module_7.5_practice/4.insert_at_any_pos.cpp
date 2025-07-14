@@ -36,36 +36,38 @@ void insertElemAtTail(Node *&head, Node *&tail, int val)
     tail->next = newNode;
     tail = newNode;
 }
+
+void insertAtHead(Node *&head, int val)
+{
+
+    Node *newNode = new Node(val);
+    newNode->next = head;
+    head = newNode;
+}
 void insertElemAtAnyPosLinkedList(Node *&head, int pos, int val)
 {
     Node *newNode = new Node(val);
     Node *temp = head;
-
-    if (pos == 0)
-    {
-        newNode->next = head;
-        head = newNode;
-        printLinkedList(head);
-        cout << endl;
-        return;
-    }
 
     for (int i = 1; i < pos; i++)
     {
         temp = temp->next;
     }
 
-    if (temp == NULL)
-    {
-        cout << "Invalid" << endl;
-        return;
-    }
-
     newNode->next = temp->next;
     temp->next = newNode;
+}
 
-    printLinkedList(head);
-    cout << endl;
+int size_of_linkedlist(Node *head)
+{
+    Node *tmp = head;
+    int sizeCount = 0;
+    while (tmp != NULL)
+    {
+        sizeCount++;
+        tmp = tmp->next;
+    }
+    return sizeCount;
 }
 
 int main()
@@ -90,11 +92,27 @@ int main()
     cin >> query;
     while (query--)
     {
+        int size = size_of_linkedlist(head);
         int pos, val;
         cin >> pos >> val;
-        insertElemAtAnyPosLinkedList(head, pos, val);
 
-        // cout << endl;
+        if (pos == 0)
+        {
+            insertAtHead(head, val);
+        }
+        else if (pos > size)
+        {
+            cout << "Invalid" << endl;
+            continue;
+        }
+        else
+        {
+            // cout << pos << "  " << val << " -";
+            insertElemAtAnyPosLinkedList(head, pos, val);
+        }
+
+        printLinkedList(head);
+        cout << endl;
     }
 
     return 0;
