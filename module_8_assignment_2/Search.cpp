@@ -13,7 +13,7 @@ public:
         this->next = NULL;
     }
 };
-void insertElemAtTailLinkedList(Node *&head, Node *&tail, int val)
+void insert_at_tail(Node *&head, Node *&tail, int val)
 {
     Node *newNode = new Node(val);
     if (!tail)
@@ -73,7 +73,7 @@ int main()
             {
                 break;
             }
-            insertElemAtTailLinkedList(head, tail, val);
+            insert_at_tail(head, tail, val);
         }
         cin >> searchNum;
         int searchOutput = searchNumFunc(head, searchNum);

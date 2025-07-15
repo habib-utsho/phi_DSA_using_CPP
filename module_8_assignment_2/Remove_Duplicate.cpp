@@ -37,38 +37,27 @@ void insert_at_tail(Node *&head, Node *&tail, int val)
     tail = newNode;
 }
 
-int findMax(Node *head)
+void remove_duplicate_val(Node *&head)
 {
-    Node *temp = head;
-    int max = temp->val;
-    while (temp->next != NULL)
+    for (Node *i = head; i != NULL; i = i->next)
     {
-        if (temp->next->val > max)
+        Node *prev = i;
+        for (Node *j = i->next; j != NULL;)
         {
-            max = temp->next->val;
+            if (i->val == j->val)
+            {
+                prev->next = j->next;
+                delete j;
+                j = prev->next;
+            }
+            else
+            {
+                prev = j;
+                j = j->next;
+            }
         }
-        temp = temp->next;
     }
-
-    return max;
 }
-
-int findMin(Node *head)
-{
-    Node *temp = head;
-    int min = temp->val;
-    while (temp->next != NULL)
-    {
-        if (temp->next->val < min)
-        {
-            min = temp->next->val;
-        }
-        temp = temp->next;
-    }
-
-    return min;
-}
-
 int main()
 {
     Node *head = NULL;
@@ -84,12 +73,7 @@ int main()
         }
         insert_at_tail(head, tail, val);
     }
-
-    int maxVal = findMax(head);
-    int minVal = findMin(head);
-    int difference = maxVal - minVal;
-    cout << difference << endl;
-    // printLinkedList(head);
-
+    remove_duplicate_val(head);
+    printLinkedList(head);
     return 0;
 }
