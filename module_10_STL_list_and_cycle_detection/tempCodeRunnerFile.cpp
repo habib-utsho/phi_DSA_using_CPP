@@ -1,11 +1,4 @@
-
-    {
-        if (
-            firstNodePointer == lastNodePointer || firstNodePointer->next == lastNodePointer)
-        {
-            break;
-        }
-        swap(firstNodePointer->val, lastNodePointer->val);
-        firstNodePointer = firstNodePointer->next;
-        lastNodePointer = lastNodePointer->prev;
-    }
+ Node(69);
+    // tail->next = newNode;
+    // newNode->next = head->next;
+    // tail = newNode;
