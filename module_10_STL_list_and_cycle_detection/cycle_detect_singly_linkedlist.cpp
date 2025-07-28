@@ -18,7 +18,7 @@ bool check_cycle_detect(Node *head)
     Node *slow = head;
     Node *fast = head;
     bool hasFlag = false;
-    while (fast->next != NULL)
+    while (fast->next != NULL && fast != NULL)
     {
         slow = slow->next;
         fast = fast->next->next;
@@ -70,7 +70,7 @@ int main()
 
     Node *newNode = new Node(69);
     tail->next = newNode;
-    newNode->next = head->next;
+    newNode->next = head;
     tail = newNode;
 
     bool hasCycle = check_cycle_detect(head);
