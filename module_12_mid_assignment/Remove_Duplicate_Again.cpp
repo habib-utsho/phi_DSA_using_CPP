@@ -13,6 +13,11 @@ int main()
         }
         myList.push_back(val);
     }
+    myList.sort();
+    myList.unique();
+    for(int val: myList){
+        cout << val << " ";
+    }
 
     
 
