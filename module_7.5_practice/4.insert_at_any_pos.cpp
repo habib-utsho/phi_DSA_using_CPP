@@ -37,10 +37,15 @@ void insertElemAtTail(Node *&head, Node *&tail, int val)
     tail = newNode;
 }
 
-void insertAtHead(Node *&head, int val)
+void insertAtHead(Node *&head, Node *&tail, int val)
 {
-
     Node *newNode = new Node(val);
+    if (head == NULL)
+    {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
     newNode->next = head;
     head = newNode;
 }
@@ -98,7 +103,11 @@ int main()
 
         if (pos == 0)
         {
-            insertAtHead(head, val);
+            insertAtHead(head, tail, val);
+        }
+        else if (pos == size)
+        {
+            insertElemAtTail(head, tail, val);
         }
         else if (pos > size)
         {
