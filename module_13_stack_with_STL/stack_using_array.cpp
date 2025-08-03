@@ -43,17 +43,24 @@ main()
         {
             break;
         }
-         st.push(val);
+        st.push(val);
     }
 
-    if (!st.empty())
-        st.pop();
-    if (!st.empty())
-        st.pop();
+    // if (!st.empty())
+    //     st.pop();
+    // if (!st.empty())
+    //     st.pop();
     // st.pop();
-    if (!st.empty())
+    // if (!st.empty())
+    //     cout << st.top() << endl;
+    // cout << st.empty() << endl;
+
+    // Print all
+    while (!st.empty())
+    {
         cout << st.top() << endl;
-    cout << st.empty() << endl;
+        st.pop();
+    }
 
     return 0;
 }
