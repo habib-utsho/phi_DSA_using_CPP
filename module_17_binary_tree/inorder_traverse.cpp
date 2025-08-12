@@ -16,15 +16,15 @@ public:
     }
 };
 
-void postorder_traverse(Node *root)
+void inorder_traverse(Node *root)
 {
     if (root == NULL)
     {
         return;
     }
+    inorder_traverse(root->left);
     cout << root->val << " ";
-    postorder_traverse(root->left);
-    postorder_traverse(root->right);
+    inorder_traverse(root->right);
 }
 
 int main()
@@ -50,7 +50,7 @@ int main()
     e->left = h;
     e->right = i;
 
-    postorder_traverse(root);
+    inorder_traverse(root);
 
     return 0;
 }

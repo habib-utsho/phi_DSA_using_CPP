@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>;
 using namespace std;
 
+
+
+
 class Node
 {
 public:
@@ -22,9 +25,9 @@ void postorder_traverse(Node *root)
     {
         return;
     }
-    cout << root->val << " ";
     postorder_traverse(root->left);
     postorder_traverse(root->right);
+    cout << root->val << " ";
 }
 
 int main()
