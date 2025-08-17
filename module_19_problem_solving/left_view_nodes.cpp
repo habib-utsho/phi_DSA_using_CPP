@@ -94,44 +94,60 @@ void output_level_order(Node *root)
     }
 }
 
-int findNodeLevel(Node *root, int findNum)
+vector<int> getLeftViewNodes(Node *root)
 {
+    vector<pair<Node *, int>> v;
+    if (!root)
+        return {};
+
+    // We can do it by frequency array ,  just need to take a max number of nodes fre array and make it false initially and inside if condition in while loop should be check the index is true or false
     queue<pair<Node *, int>> q;
-    if (root)
-    {
-        q.push({root, 1});
-    }
+    q.push({root, 1});
+
+    v.push_back({root, 1});
 
     while (!q.empty())
     {
         pair<Node *, int> p = q.front();
-        Node *front = p.first;
+        Node *node = p.first;
         int level = p.second;
         q.pop();
 
-        // cout << p->val << " ";
-        if (front->val == findNum)
+        if (v.back().second != level)
         {
-            return level;
+            // cout << "hey";
+            v.push_back({node, level});
         }
 
-        if (front->left)
-            q.push({front->left, level + 1});
-        if (front->right)
-            q.push({front->right, level + 1});
+        if (node->left)
+            q.push({node->left, level + 1});
+        if (node->right)
+            q.push({node->right, level + 1});
+    }
+    vector<int> vv;
+
+    for (auto &p : v)
+    {
+        Node *node = p.first;
+        if (node)
+        {
+            vv.push_back(node->val);
+        }
     }
 
-    return 0;
+    return vv;
 }
 
 int main()
 {
     Node *root = input_level_order();
-    int findNum;
-    cin >> findNum;
     // output_level_order(root);
+    vector<int> vv = getLeftViewNodes(root);
+    // cout << vv.size() << endl;
+    for (int val : vv)
+    {
+        cout << val << " ";
+    }
 
-    int nodeLevelNum = findNodeLevel(root, findNum);
-    cout << nodeLevelNum;
     return 0;
 }

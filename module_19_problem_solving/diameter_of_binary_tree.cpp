@@ -94,44 +94,29 @@ void output_level_order(Node *root)
     }
 }
 
-int findNodeLevel(Node *root, int findNum)
+int max_diameter = 0;
+
+int max_height(Node *root)
 {
-    queue<pair<Node *, int>> q;
-    if (root)
-    {
-        q.push({root, 1});
-    }
+    if (!root)
+        return 0;
+    if (!root->left && !root->right)
+        return 1;
+    int l = max_height(root->left);
+    int r = max_height(root->right);
 
-    while (!q.empty())
-    {
-        pair<Node *, int> p = q.front();
-        Node *front = p.first;
-        int level = p.second;
-        q.pop();
+    int d = l + r;
+    max_diameter = max(max_diameter, d);
 
-        // cout << p->val << " ";
-        if (front->val == findNum)
-        {
-            return level;
-        }
-
-        if (front->left)
-            q.push({front->left, level + 1});
-        if (front->right)
-            q.push({front->right, level + 1});
-    }
-
-    return 0;
+    return max(l, r) + 1;
 }
 
 int main()
 {
-    Node *root = input_level_order();
-    int findNum;
-    cin >> findNum;
-    // output_level_order(root);
 
-    int nodeLevelNum = findNodeLevel(root, findNum);
-    cout << nodeLevelNum;
+    Node *root = input_level_order();
+    // output_level_order(root);
+    int max_h = max_height(root);
+    cout << max_diameter;
     return 0;
 }

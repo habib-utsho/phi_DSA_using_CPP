@@ -1,3 +1,16 @@
+// Problem statement
+//         You are given an arbitrary binary tree.A binary tree is called special if every node of this tree has either zero or
+//     two children.You have to determine if the given binary tree is special or not.
+//     If the given binary tree is special,
+//     return True.Else, return False to the given function.
+
+//       Note :
+//       1. A binary tree is a tree in which each node can have at most two children.
+//       2. The given tree will be non -
+//       empty i.e the number of non - NULL nodes will always be greater than or
+//   equal to 1.
+//   3. Multiple nodes in the tree can have the same values,
+//     all values in the tree will be positive.
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -94,44 +107,45 @@ void output_level_order(Node *root)
     }
 }
 
-int findNodeLevel(Node *root, int findNum)
+bool isSpecial(Node *root)
 {
-    queue<pair<Node *, int>> q;
-    if (root)
+    if (!root)
+        return 0;
+
+    if (root->val < 0)
+        return false;
+
+    if (!root->left && !root->right)
     {
-        q.push({root, 1});
+        // cout << "root val: " << root->val << endl;
+        return true;
     }
 
-    while (!q.empty())
+    // if ((root->left && !root->right) || (!root->left && root->right))
+    if (!root->left || !root->right)
     {
-        pair<Node *, int> p = q.front();
-        Node *front = p.first;
-        int level = p.second;
-        q.pop();
-
-        // cout << p->val << " ";
-        if (front->val == findNum)
-        {
-            return level;
-        }
-
-        if (front->left)
-            q.push({front->left, level + 1});
-        if (front->right)
-            q.push({front->right, level + 1});
+        // cout << "root val: " << root->val << endl;
+        return false;
     }
 
-    return 0;
+    bool l = isSpecial(root->left);
+    bool r = isSpecial(root->right);
+
+    // cout << root->val << " " << l << " " << r << endl;
+
+    return l && r;
 }
 
 int main()
 {
-    Node *root = input_level_order();
-    int findNum;
-    cin >> findNum;
-    // output_level_order(root);
 
-    int nodeLevelNum = findNodeLevel(root, findNum);
-    cout << nodeLevelNum;
+    Node *root = input_level_order();
+    bool isTreeSpecial = isSpecial(root);
+
+    if (isTreeSpecial)
+        cout << "True";
+    else
+        cout << "False";
+
     return 0;
 }
