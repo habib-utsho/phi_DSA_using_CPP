@@ -1,16 +1,3 @@
-// Problem statement
-//         You are given an arbitrary binary tree.A binary tree is called special if every node of this tree has either zero or
-//     two children.You have to determine if the given binary tree is special or not.
-//     If the given binary tree is special,
-//     return True.Else, return False to the given function.
-
-//       Note :
-//       1. A binary tree is a tree in which each node can have at most two children.
-//       2. The given tree will be non -
-//       empty i.e the number of non - NULL nodes will always be greater than or
-//   equal to 1.
-//   3. Multiple nodes in the tree can have the same values,
-//     all values in the tree will be positive.
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -76,6 +63,8 @@ Node *input_level_order()
     return root;
 }
 
+vector<int> v;
+
 void output_level_order(Node *root)
 {
 
@@ -97,7 +86,8 @@ void output_level_order(Node *root)
         q.pop();
 
         // Step-2
-        cout << p->val << " ";
+        // cout << p->val << " ";
+        v.push_back(p->val);
 
         // Step -3
         if (p->left)
@@ -107,45 +97,17 @@ void output_level_order(Node *root)
     }
 }
 
-bool isSpecial(Node *root)
-{
-    if (!root)
-        return true;
-
-    if (root->val < 0)
-        return false;
-
-    if (!root->left && !root->right)
-    {
-        // cout << "root val: " << root->val << endl;
-        return true;
-    }
-
-    // if ((root->left && !root->right) || (!root->left && root->right))
-    if (!root->left || !root->right)
-    {
-        // cout << "root val: " << root->val << endl;
-        return false;
-    }
-
-    bool l = isSpecial(root->left);
-    bool r = isSpecial(root->right);
-
-    // cout << root->val << " " << l << " " << r << endl;
-
-    return l && r;
-}
-
 int main()
 {
 
     Node *root = input_level_order();
-    bool isTreeSpecial = isSpecial(root);
+    output_level_order(root);
+    reverse(v.begin(), v.end());
 
-    if (isTreeSpecial)
-        cout << "True";
-    else
-        cout << "False";
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
 
     return 0;
 }
