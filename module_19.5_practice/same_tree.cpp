@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/leaf-similar-trees/
+// https://leetcode.com/problems/same-tree/
 
 #include <bits/stdc++.h>;
 using namespace std;
@@ -17,7 +17,6 @@ public:
         this->right = NULL;
     }
 };
-
 Node *inputLevelBinaryTree(int totalNodes)
 {
     Node *root;
@@ -103,23 +102,21 @@ void outputLevelBinaryTree(Node *root)
 int count_nodes(Node *root, vector<int> &v)
 {
     if (!root)
-        return 0;
-
-    if (!root->left && !root->right)
     {
-        v.push_back(root->val);
-
-        return 1;
+        v.push_back(-1);
+        return 0;
     }
+    v.push_back(root->val);
 
     int l = count_nodes(root->left, v);
     int r = count_nodes(root->right, v);
 
-    return l + r;
+    return l + r + 1;
 }
 
 int main()
 {
+
     vector<int> v;
     vector<int> v2;
 
@@ -135,16 +132,17 @@ int main()
     // cout << endl;
     // outputLevelBinaryTree(root2);
 
-    int countLeafNodes1 = count_nodes(root1, v);
-    int countLeafNodes2 = count_nodes(root2, v2);
+    int countNodes1 = count_nodes(root1, v);
+    int countNodes2 = count_nodes(root2, v2);
     // cout << endl;
-    // cout << countLeafNodes1 << endl;
-    // cout << countLeafNodes2 << endl;
+    // cout << countNodes1 << endl;
+    // cout << countNodes2 << endl;
     if (v == v2)
     {
         cout << "true";
     }
     else
         cout << "false";
+
     return 0;
 }

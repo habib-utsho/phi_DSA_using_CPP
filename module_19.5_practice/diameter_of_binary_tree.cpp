@@ -1,4 +1,4 @@
-// https://leetcode.com/problems/leaf-similar-trees/
+// https://leetcode.com/problems/diameter-of-binary-tree/description/
 
 #include <bits/stdc++.h>;
 using namespace std;
@@ -17,8 +17,7 @@ public:
         this->right = NULL;
     }
 };
-
-Node *inputLevelBinaryTree(int totalNodes)
+Node *inputLevelBinaryTree()
 {
     Node *root;
     int val;
@@ -35,12 +34,8 @@ Node *inputLevelBinaryTree(int totalNodes)
     if (root)
         q.push(root);
 
-    totalNodes--;
-
-    while (!q.empty() && totalNodes > 0)
+    while (!q.empty())
     {
-
-        totalNodes -= 2;
 
         Node *p = q.front();
         q.pop();
@@ -100,51 +95,34 @@ void outputLevelBinaryTree(Node *root)
     }
 }
 
-int count_nodes(Node *root, vector<int> &v)
+int maxDiameter = 0;
+
+int max_height(Node *root)
 {
     if (!root)
-        return 0;
-
-    if (!root->left && !root->right)
     {
-        v.push_back(root->val);
-
-        return 1;
+        return 0;
     }
+    //  if (!root->left && !root->right)
+    //     return 1;
 
-    int l = count_nodes(root->left, v);
-    int r = count_nodes(root->right, v);
+    int l = max_height(root->left);
+    int r = max_height(root->right);
 
-    return l + r;
+    int diameter = l + r;
+    maxDiameter = max(diameter, maxDiameter);
+
+    return max(l, r) + 1;
 }
 
 int main()
 {
-    vector<int> v;
-    vector<int> v2;
+    Node *root = inputLevelBinaryTree();
+    // outputLevelBinaryTree(root);
+    int maxHeight = max_height(root);
+    // cout << "max_height: " << maxHeight << endl;
+    // cout << "max diameter: " << maxDiameter << endl;
+    cout << maxDiameter << endl;
 
-    int totalNodes1, totalNodes2;
-    cin >> totalNodes1;
-    Node *root1 = inputLevelBinaryTree(totalNodes1);
-
-    cin >> totalNodes2;
-    Node *root2 = inputLevelBinaryTree(totalNodes2);
-
-    // outputLevelBinaryTree(root1);
-    // cout << endl;
-    // cout << endl;
-    // outputLevelBinaryTree(root2);
-
-    int countLeafNodes1 = count_nodes(root1, v);
-    int countLeafNodes2 = count_nodes(root2, v2);
-    // cout << endl;
-    // cout << countLeafNodes1 << endl;
-    // cout << countLeafNodes2 << endl;
-    if (v == v2)
-    {
-        cout << "true";
-    }
-    else
-        cout << "false";
     return 0;
 }

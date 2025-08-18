@@ -1,4 +1,3 @@
-// https://leetcode.com/problems/univalued-binary-tree/description/
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -36,6 +35,7 @@ Node *inputLevelBinaryTree()
 
     while (!q.empty())
     {
+
         Node *p = q.front();
         q.pop();
 
@@ -45,30 +45,21 @@ Node *inputLevelBinaryTree()
         Node *myLeft;
         Node *myRight;
 
-        if (l == -1)
-            myLeft = NULL;
-        else
+        if (l != -1)
         {
-            myLeft = new Node(l);
-        }
-        if (r == -1)
-            myRight = NULL;
-        else
-        {
-            myRight = new Node(r);
-        }
-
-        p->left = myLeft;
-        p->right = myRight;
-
-        if (p->left)
+            p->left = new Node(l);
             q.push(p->left);
-        if (p->right)
+        }
+        if (r != -1)
+        {
+            p->right = new Node(r);
             q.push(p->right);
+        }
     }
 
     return root;
 }
+
 void outputLevelBinaryTree(Node *root)
 {
 
@@ -93,32 +84,54 @@ void outputLevelBinaryTree(Node *root)
     }
 }
 
-bool is_univalued(Node *rootP, Node *root)
+vector<int> getRightViewNodes(Node *root)
 {
+    vector<pair<Node *, int>> v;
     if (!root)
-        return true;
+        return {};
 
-    if (root->val != rootP->val)
+    queue<pair<Node *, int>> q;
+    v.push_back({root, 1});
+    q.push({root, 1});
+
+    while (!q.empty())
     {
-        return false;
+        pair<Node *, int> p = q.front();
+        Node *pNode = p.first;
+        int level = p.second;
+        q.pop();
+
+        if (v.back().second == level)
+        {
+            v.back().first->val = pNode->val;
+        }
+        else
+            v.push_back(p);
+
+        if (pNode->left)
+            q.push({pNode->left, level + 1});
+        if (pNode->right)
+            q.push({pNode->right, level + 1});
     }
 
-    bool l = is_univalued(rootP, root->left);
-    bool r = is_univalued(rootP, root->right);
+    vector<int> vv;
+    for (auto pair : v)
+    {
+        vv.push_back(pair.first->val);
+    }
 
-    return l && r;
+    return vv;
 }
 
 int main()
 {
-
     Node *root = inputLevelBinaryTree();
-    bool isUnivalued = is_univalued(root, root);
-
-    if (isUnivalued)
-        cout << "true";
-    else
-        cout << "false";
-
+    outputLevelBinaryTree(root);
+    cout << endl;
+    vector<int> v = getRightViewNodes(root);
+    for (auto val : v)
+    {
+        cout << val << " ";
+    }
     return 0;
 }
