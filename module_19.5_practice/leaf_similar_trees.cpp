@@ -98,23 +98,29 @@ void outputLevelBinaryTree(Node *root)
     }
 }
 
-stack<int> st;
-void getLeafNodes(Node *root, stack<int> st)
+int count_leaf_nodes(Node *root, vector<int> &v)
 {
     if (!root)
-        return;
+        return 0;
 
     if (!root->left && !root->right)
     {
-        st.push(root->val);
+        v.push_back(root->val);
+
+        return 1;
     }
 
-    getLeafNodes(root->left, st);
-    getLeafNodes(root->right, st);
+    int l = count_leaf_nodes(root->left, v);
+    int r = count_leaf_nodes(root->right, v);
+
+    return l + r;
 }
 
 int main()
 {
+    vector<int> v;
+    vector<int> v2;
+
     int totalNodes1, totalNodes2;
     cin >> totalNodes1;
     Node *root1 = inputLevelBinaryTree(totalNodes1);
@@ -122,16 +128,21 @@ int main()
     cin >> totalNodes2;
     Node *root2 = inputLevelBinaryTree(totalNodes2);
 
-    outputLevelBinaryTree(root1);
-    cout << endl;
-    cout << endl;
-    outputLevelBinaryTree(root2);
+    // outputLevelBinaryTree(root1);
+    // cout << endl;
+    // cout << endl;
+    // outputLevelBinaryTree(root2);
 
-    getLeafNodes(root1, st);
-    while (!st.empty())
+    int countLeafNodes1 = count_leaf_nodes(root1, v);
+    int countLeafNodes2 = count_leaf_nodes(root2, v2);
+    // cout << endl;
+    // cout << countLeafNodes1 << endl;
+    // cout << countLeafNodes2 << endl;
+    if (v == v2)
     {
-        cout << st.top() << " ";
-        st.pop();
+        cout << "true";
     }
+    else
+        cout << "false";
     return 0;
 }
