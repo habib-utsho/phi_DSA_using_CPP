@@ -78,57 +78,36 @@ void output_level_order(Node *root)
     }
 }
 
-vector<int> getNodesByLevel(Node *root, int num)
+void output_outer_tree_left(Node *root)
 {
-    vector<int> v;
     if (!root)
-        return {};
+        return;
 
-    queue<pair<Node *, int>> q;
-    if (root)
-        q.push({root, 0});
+    if (root->left)
+        output_outer_tree_left(root->left);
+    else
+        output_outer_tree_left(root->right);
+    cout << root->val << " ";
+}
+void output_outer_tree_right(Node *root)
+{
+    if (!root)
+        return;
 
-    while (!q.empty())
-    {
-        pair<Node *, int> p = q.front();
-        Node *frontNode = p.first;
-        int level = p.second;
-        q.pop();
-
-        if (level == num)
-            v.push_back(frontNode->val);
-
-        if (level > num)
-            break;
-
-        if (frontNode->left)
-            q.push({frontNode->left, level + 1});
-        if (frontNode->right)
-            q.push({frontNode->right, level + 1});
-    }
-
-    return v;
+    cout << root->val << " ";
+    if (root->right)
+        output_outer_tree_right(root->right);
+    else
+        output_outer_tree_right(root->left);
 }
 
 int main()
 {
 
     Node *root = input_level_order();
-    int expNum;
-    cin >> expNum;
-
-    // output_level_order(root);
-    // cout << endl;
-    // cout << expNum;
-
-    vector<int> v = getNodesByLevel(root, expNum);
-
-    for (int val : v)
-    {
-        cout << val << " ";
-    }
-    if (v.empty())
-        cout << "Invalid";
-
+    output_outer_tree_left(root->left);
+    cout << root->val << " ";
+    output_outer_tree_right(root->right);
+    // output_outer_tree_using_recursion(root->right, "right");
     return 0;
 }

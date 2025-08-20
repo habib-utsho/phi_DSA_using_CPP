@@ -15,7 +15,6 @@ public:
         this->right = NULL;
     }
 };
-
 Node *input_level_order()
 {
     Node *root;
@@ -35,7 +34,6 @@ Node *input_level_order()
         q.pop();
         int l, r;
         cin >> l >> r;
-
         if (l != -1)
         {
             p->left = new Node(l);
@@ -47,7 +45,6 @@ Node *input_level_order()
             q.push(p->right);
         }
     }
-
     return root;
 }
 
@@ -57,8 +54,7 @@ void output_level_order(Node *root)
         return;
 
     queue<Node *> q;
-    if (root)
-        q.push(root);
+    q.push(root);
 
     while (!q.empty())
     {
@@ -66,69 +62,41 @@ void output_level_order(Node *root)
         q.pop();
 
         cout << p->val << " ";
-
         if (p->left)
-        {
             q.push(p->left);
-        }
         if (p->right)
-        {
             q.push(p->right);
-        }
     }
 }
 
-vector<int> getNodesByLevel(Node *root, int num)
+Node *convert_arr_to_bst(int a[], int n, int l, int r)
 {
-    vector<int> v;
-    if (!root)
-        return {};
+    if (l > r)
+        return NULL;
+    int mid = (l + r) / 2;
+    Node *root = new Node(a[mid]);
+    Node *leftRoot = convert_arr_to_bst(a, n, l, mid - 1);
+    Node *rightRoot = convert_arr_to_bst(a, n, mid + 1, r);
 
-    queue<pair<Node *, int>> q;
-    if (root)
-        q.push({root, 0});
+    root->left = leftRoot;
+    root->right = rightRoot;
 
-    while (!q.empty())
-    {
-        pair<Node *, int> p = q.front();
-        Node *frontNode = p.first;
-        int level = p.second;
-        q.pop();
-
-        if (level == num)
-            v.push_back(frontNode->val);
-
-        if (level > num)
-            break;
-
-        if (frontNode->left)
-            q.push({frontNode->left, level + 1});
-        if (frontNode->right)
-            q.push({frontNode->right, level + 1});
-    }
-
-    return v;
+    return root;
 }
 
 int main()
 {
 
-    Node *root = input_level_order();
-    int expNum;
-    cin >> expNum;
-
-    // output_level_order(root);
-    // cout << endl;
-    // cout << expNum;
-
-    vector<int> v = getNodesByLevel(root, expNum);
-
-    for (int val : v)
+    int n;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
     {
-        cout << val << " ";
+        cin >> arr[i];
     }
-    if (v.empty())
-        cout << "Invalid";
+
+    Node *root = convert_arr_to_bst(arr, n, 0, n - 1);
+    output_level_order(root);
 
     return 0;
 }

@@ -35,7 +35,6 @@ Node *input_level_order()
         q.pop();
         int l, r;
         cin >> l >> r;
-
         if (l != -1)
         {
             p->left = new Node(l);
@@ -47,7 +46,6 @@ Node *input_level_order()
             q.push(p->right);
         }
     }
-
     return root;
 }
 
@@ -57,8 +55,7 @@ void output_level_order(Node *root)
         return;
 
     queue<Node *> q;
-    if (root)
-        q.push(root);
+    q.push(root);
 
     while (!q.empty())
     {
@@ -66,69 +63,42 @@ void output_level_order(Node *root)
         q.pop();
 
         cout << p->val << " ";
-
         if (p->left)
-        {
             q.push(p->left);
-        }
         if (p->right)
-        {
             q.push(p->right);
-        }
     }
 }
 
-vector<int> getNodesByLevel(Node *root, int num)
+void insert(Node *&root, int val)
 {
-    vector<int> v;
     if (!root)
-        return {};
+        root = new Node(val);
 
-    queue<pair<Node *, int>> q;
-    if (root)
-        q.push({root, 0});
-
-    while (!q.empty())
+    if (val > root->val)
     {
-        pair<Node *, int> p = q.front();
-        Node *frontNode = p.first;
-        int level = p.second;
-        q.pop();
-
-        if (level == num)
-            v.push_back(frontNode->val);
-
-        if (level > num)
-            break;
-
-        if (frontNode->left)
-            q.push({frontNode->left, level + 1});
-        if (frontNode->right)
-            q.push({frontNode->right, level + 1});
+        if (!root->right)
+            root->right = new Node(val);
+        else
+            insert(root->right, val);
     }
-
-    return v;
+    else
+    {
+        if (!root->left)
+            root->left = new Node(val);
+        else
+            insert(root->left, val);
+    }
 }
 
 int main()
 {
 
     Node *root = input_level_order();
-    int expNum;
-    cin >> expNum;
-
-    // output_level_order(root);
-    // cout << endl;
-    // cout << expNum;
-
-    vector<int> v = getNodesByLevel(root, expNum);
-
-    for (int val : v)
-    {
-        cout << val << " ";
-    }
-    if (v.empty())
-        cout << "Invalid";
+    int val;
+    cin >> val;
+    insert(root, val);
+    output_level_order(root);
 
     return 0;
 }
