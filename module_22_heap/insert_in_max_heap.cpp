@@ -70,17 +70,8 @@ void output_level_order(Node *root)
     }
 }
 
-int main()
+void insert_heap(vector<int> &v, int val)
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> v[i];
-    }
-    int val;
-    cin >> val;
     v.push_back(val);
 
     int curr_idx = v.size() - 1;
@@ -94,6 +85,22 @@ int main()
             break;
         curr_idx = par_idx;
     }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> v;
+    while (n--)
+    {
+        int val;
+        cin >> val;
+        insert_heap(v, val);
+    }
+    int val;
+    cin >> val;
+    insert_heap(v, val);
 
     for (int val : v)
     {
