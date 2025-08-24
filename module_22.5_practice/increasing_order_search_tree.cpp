@@ -1,4 +1,3 @@
-// https://leetcode.com/problems/range-sum-of-bst/description/
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -71,54 +70,38 @@ void output_level_order(Node *root)
     }
 }
 
-void insert_in_bst(Node *&root, int val)
+Node *onlyRightTreeRoot = NULL;
+Node *current = NULL;
+void onlyRightTrees(Node *root)
 {
     if (!root)
-    {
-        root = new Node(val);
         return;
-    }
 
-    if (val > root->val)
+    onlyRightTrees(root->left);
+
+    Node *newNode = new Node(root->val);
+
+    if (!onlyRightTreeRoot)
     {
-        if (!root->right)
-            root->right = new Node(val);
-        else
-            insert_in_bst(root->right, val);
+        onlyRightTreeRoot = newNode;
+        current = onlyRightTreeRoot;
     }
     else
     {
-        if (!root->left)
-            root->left = new Node(val);
-        else
-            insert_in_bst(root->left, val);
+        current->right = newNode;
+        current = current->right;
     }
-}
 
-int sumMinValToMax(Node *root, int minVal, int maxVal)
-{
-    if (!root)
-        return 0;
-
-    int l = sumMinValToMax(root->left, minVal, maxVal);
-    int r = sumMinValToMax(root->right, minVal, maxVal);
-
-    int total = l + r;
-    if (root->val >= minVal && root->val <= maxVal)
-    {
-        total += root->val;
-    }
-    return total;
+    onlyRightTrees(root->right);
 }
 
 int main()
 {
-
     Node *root = input_level_order();
-    // output_level_order(root);
-
-    int sum = sumMinValToMax(root, 7, 15);
-    cout << sum;
+    onlyRightTrees(root);
+    output_level_order(root);
+    cout << endl;
+    output_level_order(onlyRightTreeRoot);
 
     return 0;
 }

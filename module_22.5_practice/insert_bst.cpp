@@ -1,4 +1,3 @@
-// https://leetcode.com/problems/range-sum-of-bst/description/
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -71,13 +70,10 @@ void output_level_order(Node *root)
     }
 }
 
-void insert_in_bst(Node *&root, int val)
+void insert_in_bst(Node *root, int val)
 {
     if (!root)
-    {
         root = new Node(val);
-        return;
-    }
 
     if (val > root->val)
     {
@@ -86,6 +82,7 @@ void insert_in_bst(Node *&root, int val)
         else
             insert_in_bst(root->right, val);
     }
+
     else
     {
         if (!root->left)
@@ -95,30 +92,17 @@ void insert_in_bst(Node *&root, int val)
     }
 }
 
-int sumMinValToMax(Node *root, int minVal, int maxVal)
-{
-    if (!root)
-        return 0;
-
-    int l = sumMinValToMax(root->left, minVal, maxVal);
-    int r = sumMinValToMax(root->right, minVal, maxVal);
-
-    int total = l + r;
-    if (root->val >= minVal && root->val <= maxVal)
-    {
-        total += root->val;
-    }
-    return total;
-}
-
 int main()
 {
 
     Node *root = input_level_order();
-    // output_level_order(root);
+    output_level_order(root);
+    cout << endl;
 
-    int sum = sumMinValToMax(root, 7, 15);
-    cout << sum;
+    int val;
+    cin >> val;
+    insert_in_bst(root, val);
+    output_level_order(root);
 
     return 0;
 }

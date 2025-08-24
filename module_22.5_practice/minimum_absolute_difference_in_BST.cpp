@@ -1,4 +1,5 @@
-// https://leetcode.com/problems/range-sum-of-bst/description/
+// https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/
+
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -71,54 +72,29 @@ void output_level_order(Node *root)
     }
 }
 
-void insert_in_bst(Node *&root, int val)
+int min_diff = INT_MAX;
+int prev_val = -1;
+
+// In order
+void getMinDiff(Node *root)
 {
     if (!root)
-    {
-        root = new Node(val);
         return;
-    }
 
-    if (val > root->val)
-    {
-        if (!root->right)
-            root->right = new Node(val);
-        else
-            insert_in_bst(root->right, val);
-    }
-    else
-    {
-        if (!root->left)
-            root->left = new Node(val);
-        else
-            insert_in_bst(root->left, val);
-    }
-}
+    getMinDiff(root->left);
 
-int sumMinValToMax(Node *root, int minVal, int maxVal)
-{
-    if (!root)
-        return 0;
+    if (prev_val != -1)
+        min_diff = min(min_diff, abs(root->val - prev_val));
+    prev_val = root->val;
 
-    int l = sumMinValToMax(root->left, minVal, maxVal);
-    int r = sumMinValToMax(root->right, minVal, maxVal);
-
-    int total = l + r;
-    if (root->val >= minVal && root->val <= maxVal)
-    {
-        total += root->val;
-    }
-    return total;
+    getMinDiff(root->right);
 }
 
 int main()
 {
-
     Node *root = input_level_order();
-    // output_level_order(root);
-
-    int sum = sumMinValToMax(root, 7, 15);
-    cout << sum;
+    getMinDiff(root);
+    cout << min_diff << endl;
 
     return 0;
 }

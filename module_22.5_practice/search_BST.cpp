@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/search-in-a-binary-search-tree/description/
 #include <bits/stdc++.h>;
 using namespace std;
 
@@ -87,7 +88,7 @@ int main()
 {
 
     Node *root = input_level_order();
-    Node *expectedNode = findNode(root, 7);
+    Node *expectedNode = findNode(root, 3);
     if (expectedNode)
     {
         cout << expectedNode->val << endl;
